@@ -1,0 +1,34 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.UI;
+using TMPro;
+
+public class StoryScript : MonoBehaviour
+{
+    [SerializeField]
+    // Text
+    private TextAsset story;
+    private string storyText;
+    private string[] storySentences;
+    
+    void Start()
+    {
+        // Text 
+        storySplit();       
+        //storyLoader()
+        StartCoroutine(storyLoader());
+    }
+
+    private IEnumerator storyLoader() {
+        for (int i = 0; i < storySentences.Length; i++){
+            this.gameObject.GetComponent<TextMeshProUGUI>().text = storySentences[i];
+            yield return new WaitForSeconds(5f);
+        }
+    }
+
+    void storySplit() {
+        storyText = story.text;
+        storySentences = storyText.Split(char.Parse("\n"));
+    }
+}
